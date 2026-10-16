@@ -3,22 +3,22 @@
 #define NB_VALEURS 3
 #define MAX_LIGNES 15
 
-// affiche la ligne y de l'histogramme vertical
-// une barre "xxx" si la valeur atteint y, sinon des espaces
+// comme etape 3 mais avec la graduation a gauche
+// et des '.' pour les lignes de suivi
 void afficher_ligne_histov(int tab[], int taille, float y)
 {
     int j;
 
-    printf("| ");
+    printf("%5.1f | ", y);
     for (j = 0; j < taille; j++)
     {
         if (tab[j] >= y)
         {
-            printf("xxx ");
+            printf("xxx.");
         }
         else
         {
-            printf("    ");
+            printf("....");
         }
     }
     printf("\n");
@@ -31,7 +31,6 @@ int main()
     int maximum;
     float y;
 
-    // recherche du maximum (comme a l'etape 2)
     maximum = valeurs[0];
     for (i = 1; i < NB_VALEURS; i++)
     {
@@ -43,11 +42,18 @@ int main()
 
     for (i = 0; i < MAX_LIGNES; i++)
     {
-        // y descend de maximum jusqu'a maximum / MAX_LIGNES
         y = (float)maximum * (MAX_LIGNES - i) / MAX_LIGNES;
         afficher_ligne_histov(valeurs, NB_VALEURS, y);
     }
-    printf("+---------------------------------------\n");
+    printf("      +---------------------------------------\n");
+
+    // valeur de chaque barre en dessous
+    printf("        ");
+    for (i = 0; i < NB_VALEURS; i++)
+    {
+        printf("%3d ", valeurs[i]);
+    }
+    printf("\n");
 
     return 0;
 }
