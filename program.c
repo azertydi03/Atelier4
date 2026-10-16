@@ -1,18 +1,37 @@
 #include <stdio.h>
 
 #define NB_VALEURS 3
-#define MAX_LONGUEUR 50
+#define MAX_LIGNES 15
+
+// affiche la ligne y de l'histogramme vertical
+// une barre "xxx" si la valeur atteint y, sinon des espaces
+void afficher_ligne_histov(int tab[], int taille, float y)
+{
+    int j;
+
+    printf("| ");
+    for (j = 0; j < taille; j++)
+    {
+        if (tab[j] >= y)
+        {
+            printf("xxx ");
+        }
+        else
+        {
+            printf("    ");
+        }
+    }
+    printf("\n");
+}
 
 int main()
 {
     int valeurs[NB_VALEURS] = { 8, 4, 12 };
     int i;
-    int j;
     int maximum;
-    float echelle;
-    int nb_x;
+    float y;
 
-    // recherche du maximum
+    // recherche du maximum (comme a l'etape 2)
     maximum = valeurs[0];
     for (i = 1; i < NB_VALEURS; i++)
     {
@@ -22,20 +41,13 @@ int main()
         }
     }
 
-    // echelle : la plus grande barre fera MAX_LONGUEUR caracteres
-    echelle = (float)MAX_LONGUEUR / maximum;
-
-    for (i = 0; i < NB_VALEURS; i++)
+    for (i = 0; i < MAX_LIGNES; i++)
     {
-        nb_x = valeurs[i] * echelle;
-        printf("| ");
-        for (j = 0; j < nb_x; j++)
-        {
-            printf("x");
-        }
-        printf(" %d\n", valeurs[i]);
+        // y descend de maximum jusqu'a maximum / MAX_LIGNES
+        y = (float)maximum * (MAX_LIGNES - i) / MAX_LIGNES;
+        afficher_ligne_histov(valeurs, NB_VALEURS, y);
     }
-    printf("+-------------------------------------------------------\n");
+    printf("+---------------------------------------\n");
 
     return 0;
 }
